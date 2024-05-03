@@ -53,12 +53,12 @@
                     </div>
                 </div>
                 <select id="temporada_select" class="unpoquitodeestilo">
-                    <option value="todos">Todas las temporadas</option>
-                    <option value="1">Temporada 1</option>
-                    <option value="2">Temporada 2</option>
-                    <option value="3">Temporada 3</option>
-                    <option value="4">Temporada 4</option>
-                    <option value="5">Temporada 5</option>
+                    <option value="todos">Filtrar</option>
+                    <option value="1">1-25</option>
+                    <option value="2">26-45</option>
+                    <option value="3">46-75</option>
+                    <option value="4">76-100</option>
+                    <option value="5">Todos los Pokemones</option>
                 </select>
             </div>
         </nav>
@@ -68,7 +68,35 @@
     <main class="container">
         <div id="pokemon-container"></div>
 
-        <button id="clear-storage">Borrar Pokémon Guardados</button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content" id="modalContent">
+                    <div class="loading" id="loading">
+                        <img src="loading.gif" class="img-fluid" alt="" style="max-width: 60px;">
+                    </div>
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-5" id="titulo">Modal title</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body container" id="contenido">
+                        <div class="row">
+                            <img id="img" src="" alt="Imagen del episodio" class="col-md-6">
+                            <div class="col-md-4">
+                                <div id="temporada" class="col-md"> </div>
+                                <div id="episodio" class="col-md"> </div>
+                                <div id="base_experience" class="col-md"> </div>
+                            </div>
+                            <div id="descripcion"> </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
 
