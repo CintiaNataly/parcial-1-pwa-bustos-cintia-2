@@ -13,7 +13,7 @@ main {
 
 .logo-principal{
     display: block;
-    margin: auto;
+    margin: 2rem auto;
 
     max-width: 550px;
 }
@@ -24,10 +24,63 @@ main {
     background-color: black;
 }
 
+.loading{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    color: white;
+    z-index: 9;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.loading.deactivate{
+    display: none;
+}
+
 .unpoquitodeestilo{
     border-radius: 5px;
     border: none;
     background-color: black;
     color: whitesmoke;
     padding: 2px 4px;
+}
+
+
+.custom-button {
+    background-color: black; 
+    color: white; 
+    border: none; 
+    border-radius: 0.6rem;
+    padding: 5px 30px; 
+    cursor: pointer; 
+  }
+  
+.custom-button:hover {
+    background-color: yellow;
+    color: black;
+  }
+  
+
+
+.pokemon-card {
+    background-color: whitesmoke;
+    border-radius: 0.5rem;
+    padding: 10px;
+    margin: 10px;
+    width: 250px;
+    display: inline-block;
+    text-align: center;
+}
+.pokemon-img {
+    max-width: 250px;
+    max-height: 250px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.pokemon-img:hover {
+    transform: scale(1.2);
 }
