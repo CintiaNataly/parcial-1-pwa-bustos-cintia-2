@@ -10,8 +10,54 @@
 
     <link rel="stylesheet" href="css/estilos.css">
 </head>
+
+
 <body>
-    
+    <header>
+        <h1>Pokemon</h1>
+        <img src="img/logo.webp" alt="logo de pokemon" class="logo-principal">
+
+        <nav class="navbar  container modificaciones">
+            <div class="container-fluid">
+                <!-- Boton de HISTORIAL -->
+                <button type="button" id="mostrarHistorial" class="btn unpoquitodeestilo" data-bs-toggle="modal" data-bs-target="#modalHistorial">
+                    Historial
+                </button>
+
+                <!-- Modal HISTORIAL -->
+                <div class="modal fade " id="modalHistorial" data-bs-backdrop="static" data-bs-keyboard="false"
+                    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2 class="modal-title fs-5" id="staticBackdropLabel">Visto!</h2>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div>Total: <span id="resultado"></span></div>
+                                <ul class="capitulos_vistos" id="capitulos_vistos" style="list-style: none;">
+                                    <li></li>
+                                </ul>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" id="vaciarLocalStorage">Borrar Historial</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <select id="temporada_select" class="unpoquitodeestilo">
+                    <option value="todos">Todas las temporadas</option>
+                    <option value="1">Temporada 1</option>
+                    <option value="2">Temporada 2</option>
+                    <option value="3">Temporada 3</option>
+                    <option value="4">Temporada 4</option>
+                    <option value="5">Temporada 5</option>
+                  </select>
+            </div>
+        </nav>
+    </header>    
 
 
 

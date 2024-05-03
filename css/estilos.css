@@ -1,0 +1,33 @@
+body {
+    margin: auto;
+    background-color: #ffde00;
+}
+
+h1 {
+    display: none;
+}
+
+main {
+    max-width: 980px;
+}
+
+.logo-principal{
+    display: block;
+    margin: auto;
+
+    max-width: 550px;
+}
+
+.modificaciones {
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    background-color: black;
+}
+
+.unpoquitodeestilo{
+    border-radius: 5px;
+    border: none;
+    background-color: black;
+    color: whitesmoke;
+    padding: 2px 4px;
+}
