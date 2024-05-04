@@ -139,44 +139,72 @@ function cardPokemon(pokemon) {
 
 
 
+/*******************/
 // Capturando el botón y el elemento ul
 const btnMostrarHistorial = document.getElementById("mostrarHistorial");
 const ulListado = document.getElementById("pokemones_vistos");
 
 // Añadiendo un event listener al botón para capturar el click
 btnMostrarHistorial.addEventListener("click", function () {
-    // Paso 1: Cargar el array del localStorage
-    let dataArray = JSON.parse(localStorage.getItem("myDataArray"));
+ 
+    ListarHistorial();
 
-    // Paso 2: Verificar si el array se ha cargado correctamente
-    if (dataArray) {
-        document.getElementById("resultado").textContent = dataArray.length;
-
-        // Paso 3: Ordenar el array en orden inverso (de último a primero)
-        dataArray.reverse();
-
-        // Paso 4: Limpiar el contenido previo del ul
-        ulListado.innerHTML = "";
-
-        // Paso 5: Recorrer el array y crear elementos li para cada elemento
-        dataArray.forEach(function (element) {
-            const li = document.createElement("li");
-            //li.textContent = JSON.stringify(element); // Convertir el elemento a texto
-            li.textContent = element.id + ") " + element.name;
-            ulListado.appendChild(li); // Agregar el elemento li al ul
-        });
-    } else {
-        document.getElementById("resultado").textContent = 0;
-        ulListado.innerHTML = "<li>No hay datos en el historial</li>";
-    }
 });
 
 //Borrar el historial de la modal
 document.getElementById('vaciarLocalStorage').addEventListener('click', function () {
-    // Vaciar localStorage
-    localStorage.clear();
-    alert('Está seguro que quiere borrar los datos?');
+
+    var resultado = confirm("¿Está seguro que quiere borrar los datos?");
+
+    if (resultado === true) {
+        // El usuario ha hecho clic en "Aceptar"
+        // Aquí puedes realizar alguna acción
+        console.log("El usuario ha confirmado.");
+        // Vaciar localStorage
+        localStorage.clear();
+    } else {
+        // El usuario ha hecho clic en "Cancelar" o ha cerrado el cuadro de diálogo
+        // Aquí puedes realizar alguna otra acción o simplemente ignorar
+        console.log("El usuario ha cancelado.");
+    }
+    ListarHistorial()
+    
+    
+    //alert('Está seguro que quiere borrar los datos?');
+
+
 });
+
+
+
+// Funcion Listar Historial 
+
+function ListarHistorial(){
+       // Paso 1: Cargar el array del localStorage
+       let dataArray = JSON.parse(localStorage.getItem("myDataArray"));
+
+       // Paso 2: Verificar si el array se ha cargado correctamente
+       if (dataArray) {
+           document.getElementById("resultado").textContent = dataArray.length;
+   
+           // Paso 3: Ordenar el array en orden inverso (de último a primero)
+           dataArray.reverse();
+   
+           // Paso 4: Limpiar el contenido previo del ul
+           ulListado.innerHTML = "";
+   
+           // Paso 5: Recorrer el array y crear elementos li para cada elemento
+           dataArray.forEach(function (element) {
+               const li = document.createElement("li");
+               //li.textContent = JSON.stringify(element); // Convertir el elemento a texto
+               li.textContent = element.id + ") " + element.name;
+               ulListado.appendChild(li); // Agregar el elemento li al ul
+           });
+       } else {
+           document.getElementById("resultado").textContent = 0;
+           ulListado.innerHTML = "<li>No hay datos en el historial</li>";
+       }
+}
 
 
 
@@ -214,8 +242,8 @@ async function main() {
         pokemonContainer.appendChild(pokemonCard);
     });
 
-    // Mostrar por defecto los primeros 25 pokemones
-    displayPokemon(1, 25);
+    // Mostrar por defecto todos los pokemones
+    displayPokemon(1, 100);
 }
 
 // Función para obtener la lista de pokémones de la API
