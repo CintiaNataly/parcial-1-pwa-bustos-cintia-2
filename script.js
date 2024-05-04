@@ -39,8 +39,6 @@ function cardPokemon(pokemon) {
         // ...
     });
 
-
-
     button.type = "button";
     button.setAttribute("data-bs-toggle", "modal");
     button.setAttribute("data-bs-target", "#exampleModal");
@@ -51,10 +49,7 @@ function cardPokemon(pokemon) {
         // Eliminar  clase 'deactivate' al div con id 'contenido'
         document.getElementById("loading").classList.remove("deactivate");
 
-
         const capitulo = this.getAttribute("data-capitulo");
-
-
 
         //leer detalle en modal
         const URL_CAP = "https://pokeapi.co/api/v2/pokemon/" + capitulo;
@@ -98,10 +93,8 @@ function cardPokemon(pokemon) {
                     abilityNames += "" + abilityName + ", ";
                 });
 
-
                 // Asigna los nombres de las habilidades al elemento HTML
                 tempElement.innerHTML = "<strong>Ability:</strong> " + abilityNames;
-
 
                 // Accede al array de Especies
                 speciesElement.innerHTML = "<strong>Especie:</strong> " + data.species.name;
@@ -112,7 +105,6 @@ function cardPokemon(pokemon) {
 
                 contentElement.textContent = data.description;
 
-
                 // Paso 1: Verificar si ya existe un array en el localStorage
                 let dataArray = JSON.parse(localStorage.getItem("myDataArray"));
 
@@ -121,22 +113,17 @@ function cardPokemon(pokemon) {
                     dataArray = [];
                 }
 
-
                 // Paso 3: Realizar operaciones en el array (por ejemplo, agregar un nuevo elemento)
                 dataArray.push({ id: data.id, name: data.name });
 
-
                 // Paso 4: Guardar el array actualizado en el localStorage
                 localStorage.setItem("myDataArray", JSON.stringify(dataArray));
-
 
                 // Agregar clase 'placeholder' después de cierto tiempo
                 setTimeout(function () {
                     document.getElementById("loading").classList.add("deactivate");
                     //document.getElementById('loading').classList.remove('deactivate');
                 }, 1000); // Change 3000 to the desired delay in milliseconds
-
-
             });
     });
 
@@ -145,76 +132,10 @@ function cardPokemon(pokemon) {
     card.appendChild(button);
 
     return card;
+
+
+
 }
-
-function checkImageExists(url, callback) {
-    var img = new Image();
-    img.onload = function () {
-        callback(true);
-    };
-    img.onerror = function () {
-        callback(false);
-    };
-    img.src = url;
-}
-
-// Función principal para obtener los datos y crear las tarjetas
-async function main() {
-    const pokemonData = await getPokemonData();
-
-    const pokemonContainer = document.getElementById("pokemon-container");
-
-    pokemonData.forEach(async (pokemon, index) => {
-        const id = index + 1;
-
-        const pokemonCard = cardPokemon({ id, name: pokemon.name });
-
-        pokemonContainer.appendChild(pokemonCard);
-    });
-
-
-
-
-
-
-    // Función para mostrar los nombres de los Pokémon guardados en el localStorage
-function mostrarNombresGuardados() {
-    // Obtener el elemento donde se mostrarán los nombres
-    const listaNombresElement = document.getElementById("lista-nombres");
-
-    // Limpiar la lista para evitar duplicados
-    listaNombresElement.innerHTML = "";
-
-    // Obtener los nombres de los Pokémon guardados en el localStorage
-    const nombresGuardados = JSON.parse(localStorage.getItem("selectedPokemon"));
-
-    // Iterar sobre los nombres y agregarlos a la lista
-    if (nombresGuardados && nombresGuardados.length > 0) {
-        nombresGuardados.forEach(nombre => {
-            const listItem = document.createElement("li");
-            listItem.textContent = nombre;
-            listaNombresElement.appendChild(listItem);
-        });
-    } else {
-        // Si no hay nombres guardados, mostrar un mensaje alternativo
-        const noDataMessage = document.createElement("p");
-        noDataMessage.textContent = "No hay nombres guardados.";
-        listaNombresElement.appendChild(noDataMessage);
-    }
-}
-
-// Llamar a la función para mostrar los nombres guardados cuando el DOM esté completamente cargado
-document.addEventListener("DOMContentLoaded", function() {
-    mostrarNombresGuardados();
-});
-
-
-
-
-
-
-
-
 
 
 
@@ -268,11 +189,77 @@ document.getElementById('vaciarLocalStorage').addEventListener('click', function
 
 
 
-
-
-
-
+function checkImageExists(url, callback) {
+    var img = new Image();
+    img.onload = function () {
+        callback(true);
+    };
+    img.onerror = function () {
+        callback(false);
+    };
+    img.src = url;
 }
+
+// Función principal para obtener los datos y crear las tarjetas
+async function main() {
+    const pokemonData = await getPokemonData();
+
+    const pokemonContainer = document.getElementById("pokemon-container");
+
+    pokemonData.forEach(async (pokemon, index) => {
+        const id = index + 1;
+
+        const pokemonCard = cardPokemon({ id, name: pokemon.name });
+
+        pokemonContainer.appendChild(pokemonCard);
+    });
+
+    // Mostrar por defecto los primeros 25 pokemones
+    displayPokemon(1, 25);
+}
+
+// Función para obtener la lista de pokémones de la API
+async function getPokemonList() {
+    const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=100');
+    const data = await response.json();
+    return data.results.map((pokemon, index) => ({ id: index + 1, name: pokemon.name }));
+}
+
+// Función para mostrar los pokémones dentro de un rango específico
+async function displayPokemon(start, end) {
+    const pokemonList = await getPokemonList();
+    const pokemonDiv = document.getElementById("pokemon-container");
+    pokemonDiv.innerHTML = "";
+    for (let i = start; i <= end; i++) {
+        const pokemon = pokemonList.find(p => p.id === i);
+        if (pokemon) {
+            const pokemonCard = cardPokemon(pokemon);
+            pokemonDiv.appendChild(pokemonCard);
+        }
+    }
+}
+
+// Event listener para el cambio en el rango de selección
+document.getElementById("temporada_select").addEventListener("change", function () {
+    const selectedOption = this.value;
+    switch (selectedOption) {
+        case "1":
+            displayPokemon(1, 25);
+            break;
+        case "2":
+            displayPokemon(26, 50);
+            break;
+        case "3":
+            displayPokemon(51, 75);
+            break;
+        case "4":
+            displayPokemon(76, 100);
+            break;
+        case "5":
+            displayPokemon(1, 100);
+            break;
+    }
+});
 
 // Llamamos a la función principal
 main();
