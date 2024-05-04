@@ -3,12 +3,14 @@ body {
     background-color: #ffde00;
 }
 
+
 h1 {
     display: none;
 }
 
 main {
-    max-width: 980px;
+    max-width: 1080px;
+    margin: auto;
 }
 
 .logo-principal{
@@ -83,4 +85,10 @@ main {
 
 .pokemon-img:hover {
     transform: scale(1.2);
+}
+
+.pokemon-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }

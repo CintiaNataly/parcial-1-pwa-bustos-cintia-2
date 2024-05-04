@@ -30,9 +30,16 @@ function cardPokemon(pokemon) {
     const button = document.createElement("button");
     button.textContent = "Ver más info";
     button.classList.add("custom-button");
-    /*button.addEventListener('click', () => {
-          window.location.href = `https://pokeapi.co/api/v2/pokemon/${pokemon.id}`;
-      });*/
+    // Agregar un event listener al botón después de crearlo
+    button.addEventListener("click", function () {
+        // Guardar el nombre del Pokémon en el localStorage
+        localStorage.setItem("selectedPokemon", pokemon.name);
+
+        // Abre la modal aquí
+        // ...
+    });
+
+
 
     button.type = "button";
     button.setAttribute("data-bs-toggle", "modal");
@@ -44,11 +51,10 @@ function cardPokemon(pokemon) {
         // Eliminar  clase 'deactivate' al div con id 'contenido'
         document.getElementById("loading").classList.remove("deactivate");
 
-        // Obtén el valor del atributo data-capitulo
-        const capitulo = this.getAttribute("data-capitulo");
-        //console.log('Capítulo:', capitulo);
 
-        // Almacena el valor de capitulo en localStorage
+        const capitulo = this.getAttribute("data-capitulo");
+
+
 
         //leer detalle en modal
         const URL_CAP = "https://pokeapi.co/api/v2/pokemon/" + capitulo;
@@ -100,9 +106,9 @@ function cardPokemon(pokemon) {
                 // Accede al array de Especies
                 speciesElement.innerHTML = "<strong>Especie:</strong> " + data.species.name;
 
-                console.log("ver "+data.sprites.other.home.front_default)
+                console.log("ver " + data.sprites.other.home.front_default)
 
-                base_experienceElement.innerHTML =  "<strong>Base experience:</strong> " + data.base_experience;
+                base_experienceElement.innerHTML = "<strong>Base experience:</strong> " + data.base_experience;
 
                 contentElement.textContent = data.description;
 
@@ -165,6 +171,107 @@ async function main() {
 
         pokemonContainer.appendChild(pokemonCard);
     });
+
+
+
+
+
+
+    // Función para mostrar los nombres de los Pokémon guardados en el localStorage
+function mostrarNombresGuardados() {
+    // Obtener el elemento donde se mostrarán los nombres
+    const listaNombresElement = document.getElementById("lista-nombres");
+
+    // Limpiar la lista para evitar duplicados
+    listaNombresElement.innerHTML = "";
+
+    // Obtener los nombres de los Pokémon guardados en el localStorage
+    const nombresGuardados = JSON.parse(localStorage.getItem("selectedPokemon"));
+
+    // Iterar sobre los nombres y agregarlos a la lista
+    if (nombresGuardados && nombresGuardados.length > 0) {
+        nombresGuardados.forEach(nombre => {
+            const listItem = document.createElement("li");
+            listItem.textContent = nombre;
+            listaNombresElement.appendChild(listItem);
+        });
+    } else {
+        // Si no hay nombres guardados, mostrar un mensaje alternativo
+        const noDataMessage = document.createElement("p");
+        noDataMessage.textContent = "No hay nombres guardados.";
+        listaNombresElement.appendChild(noDataMessage);
+    }
+}
+
+// Llamar a la función para mostrar los nombres guardados cuando el DOM esté completamente cargado
+document.addEventListener("DOMContentLoaded", function() {
+    mostrarNombresGuardados();
+});
+
+
+
+
+
+
+
+
+
+
+
+// Capturando el botón y el elemento ul
+const btnMostrarHistorial = document.getElementById("mostrarHistorial");
+const ulListado = document.getElementById("pokemones_vistos");
+
+// Añadiendo un event listener al botón para capturar el click
+btnMostrarHistorial.addEventListener("click", function () {
+    // Paso 1: Cargar el array del localStorage
+    let dataArray = JSON.parse(localStorage.getItem("myDataArray"));
+
+    // Paso 2: Verificar si el array se ha cargado correctamente
+    if (dataArray) {
+        document.getElementById("resultado").textContent = dataArray.length;
+
+        // Paso 3: Ordenar el array en orden inverso (de último a primero)
+        dataArray.reverse();
+
+        // Paso 4: Limpiar el contenido previo del ul
+        ulListado.innerHTML = "";
+
+        // Paso 5: Recorrer el array y crear elementos li para cada elemento
+        dataArray.forEach(function (element) {
+            const li = document.createElement("li");
+            //li.textContent = JSON.stringify(element); // Convertir el elemento a texto
+            li.textContent = element.id + ") " + element.name;
+            ulListado.appendChild(li); // Agregar el elemento li al ul
+        });
+    } else {
+        document.getElementById("resultado").textContent = 0;
+        ulListado.innerHTML = "<li>No hay datos en el historial</li>";
+    }
+});
+
+//Borrar el historial de la modal
+document.getElementById('vaciarLocalStorage').addEventListener('click', function () {
+    // Vaciar localStorage
+    localStorage.clear();
+    alert('Está seguro que quiere borrar los datos?');
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 // Llamamos a la función principal
